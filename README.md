@@ -15,7 +15,7 @@ Developed in Python 3.6, as they are compatible with TensorFlow (versions tested
 
 You can use the QReLU and m-QReLU functions as custom activation functions in Keras as a layer:
 
-# Example of usage in a sequential model in Keras with a QReLU layer between a convolutional layer and a pooling layer
+#### Example of usage in a sequential model in Keras with a QReLU layer between a convolutional layer and a pooling layer
 
 ```python
 model = models.Sequential()
