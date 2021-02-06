@@ -1,5 +1,5 @@
-# qrelu_mqrelu_TensorFlow_Keras
-## QReLU and m-QReLU: Two novel quantum activation functions in TensorFlow and Keras
+# QReLU and m-QReLU in TensorFlow and Keras
+## Two novel quantum activation functions
 
 The Quantum ReLU **'QReLU'** and its modified version or **'m-QReLU'** are Python custom activation functions available for both shallow and deep neural networks in TensorFlow and Keras for Machine Learning- and Deep Learning-based classification. They are distributed under the [CC BY 4.0 license](http://creativecommons.org/licenses/by/4.0/).
 
