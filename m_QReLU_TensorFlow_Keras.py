@@ -5,11 +5,9 @@
 
 # Author: Luca Parisi <luca.parisi@ieee.org>
 
-
 import numpy as np
 import tensorflow as tf
 from tensorflow.keras.layers import Layer
-
 
 # m-QReLU as a custom activation function in TensorFlow
 
@@ -24,6 +22,7 @@ convolutional_layer_2 = tf.layers.conv2d(
 convolutional_layer_activation = tf_m_q_relu(convolutional_layer_2)
 pooling_layer_2 = tf.layers.max_pooling2d(inputs=convolutional_layer_activation, pool_size=[2, 2], strides=2)
 '''
+
 
 # Defining the m-QReLU function
 def m_q_relu(x):
@@ -67,12 +66,12 @@ np_m_q_relu_32 = lambda x: np_m_q_relu(x).astype(np.float32)
 
 def tf_m_q_relu(x,name=None):
     with tf.name_scope(name, "m_q_relu", [x]) as name:
-        y = py_func(np_m_q_relu_32,   # Forward pass function
+        y = py_func(np_m_q_relu_32,  # Forward pass function
                         [x],
                         [tf.float32],
                         name=name,
-                         grad= m_q_relu_grad) # The function that overrides gradient
-        y[0].set_shape(x.get_shape())     # To specify the rank of the input
+                         grad= m_q_relu_grad)  # The function that overrides gradient
+        y[0].set_shape(x.get_shape())  # To specify the rank of the input
         return y[0]
 
 np_d_m_q_relu_32 = lambda x: np_d_m_q_relu(x).astype(np.float32)
@@ -98,6 +97,7 @@ model.add(m_QReLU())
 model.add(layers.MaxPooling2D((2, 2)))
 '''
 
+
 class m_QReLU(Layer):
 
     def __init__(self):
@@ -115,3 +115,4 @@ class m_QReLU(Layer):
 
     def compute_output_shape(self, input_shape):
         return input_shape
+      
