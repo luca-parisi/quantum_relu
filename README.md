@@ -3,7 +3,7 @@
 
 The Quantum ReLU **'QReLU'** and its modified version or **'m-QReLU'** are Python custom activation functions available for both shallow and deep neural networks in TensorFlow and Keras for Machine Learning- and Deep Learning-based classification. They are distributed under the [CC BY 4.0 license](http://creativecommons.org/licenses/by/4.0/).
 
-Details on this function, implementation and validation against gold standard activation functions for both shallow and deep neural networks are available at the following: **[Parisi, L., 2020](https://arxiv.org/abs/2010.08031)**. 
+Details on this function, implementation and validation against gold standard activation functions for both shallow and deep neural networks are available at the following: **[Parisi, L., 2020](https://arxiv.org/abs/2010.08031)** and **[Parisi, L., et al., 2022](https://www.sciencedirect.com/science/article/abs/pii/S0957417421012483)**. 
 
 
 ### Dependencies
@@ -26,4 +26,4 @@ model.add(layers.MaxPooling2D((2, 2)))
 
 ### Citation request
 
-If you are using this function, please cite the paper by **[Parisi, L., 2020](https://arxiv.org/abs/2010.08031)** as follows: **arXiv:2010.08031 [cs.CV]**.
+If you are using this function, please cite the paper by **[Parisi, L., 2020](https://arxiv.org/abs/2010.08031)** and **[Parisi, L., et al., 2022](https://www.sciencedirect.com/science/article/abs/pii/S0957417421012483)**.
