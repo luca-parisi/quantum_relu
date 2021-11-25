@@ -15,12 +15,12 @@ Developed in Python 3.6, as they are compatible with TensorFlow (versions tested
 
 You can use the QReLU and m-QReLU functions as custom activation functions in Keras as a layer:
 
-#### Example of usage in a sequential model in Keras with a QReLU layer between a convolutional layer and a pooling layer
+#### Example of usage in a sequential model in Keras with a `QReLU` (or a `m_QReLU`) layer between a convolutional layer and a pooling layer
 
 ```python
 model = models.Sequential()
 model.add(layers.Conv2D(32, (3, 3), input_shape=(32, 32, 3)))
-model.add(QReLU()) # or model.add(m_QReLU()) 
+model.add(QReLU())  # or model.add(m_QReLU()) 
 model.add(layers.MaxPooling2D((2, 2)))
 ```
 
