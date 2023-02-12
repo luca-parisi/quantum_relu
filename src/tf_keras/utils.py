@@ -2,19 +2,14 @@
 This file contains utility-based or helper functions leveraged across the two quantum activation functions
 QReLU and m-QReLU.
 """
-from typing import Callable, Union, Optional
+from typing import Callable, Optional, Union
 
 import numpy as np
 import tensorflow as tf
 from tensorflow import Tensor
 
-from .constants import (
-    MAX_RANDINT,
-    MIN_RANDINT,
-    PREFIX_FUNC_NAME,
-    STATEFUL,
-    SUFFIX_GRAD_NAME
-)
+from .constants import (MAX_RANDINT, MIN_RANDINT, PREFIX_FUNC_NAME, STATEFUL,
+                        SUFFIX_GRAD_NAME)
 
 
 def py_func(

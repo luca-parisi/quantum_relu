@@ -9,23 +9,25 @@ Details on these functions, implementations, and validations against gold standa
 ### Dependencies
 
 The dependencies are included in the `environment.yml` file. 
-Run the following command to install the required version of Python (3.9.16) and all dependencies in a conda virtual 
+Run the following command to install the required version of Python (v3.9.16) and all dependencies in a conda virtual 
 environment (replace `<env_name>` with your environment name):
-`conda create --name <env_name> --file environment.yml`
+
+- `conda create --name <env_name> --file environment.yml`
 
 
 ### Usage
 
-You can use the QReLU and m-QReLU activation functions as a keras layer:
+You can use the `QuantumReLU` activation functions as a keras layer and set the `modified` attribute to either `False` 
+or `True` if using the QReLU or the m-QReLU respectively:
 
-#### Example of usage in a sequential model in Keras with a `QReLU` (or a `MQReLU`) layer between a convolutional layer and a pooling layer
+#### Example of usage in a sequential model in Keras with a `QuantumReLU` layer between a convolutional layer and a pooling layer
 
 Either
 
 ```python
 model = models.Sequential()
 model.add(layers.Conv2D(32, (3, 3), input_shape=(32, 32, 3)))
-model.add(QReLU())  # or model.add(MQReLU())
+model.add(QuantumReLU(modified=False))  # True if using the m-QReLU (instead of the QReLU)
 model.add(layers.MaxPooling2D((2, 2)))
 ```
 
@@ -36,7 +38,7 @@ model = keras.Sequential(
         keras.Input(shape=(32, 32, 3)),
 
         layers.Conv2D(32, kernel_size=(3, 3)),
-        QReLU(),  # or model.add(MQReLU())
+        QuantumReLU(modified=False),  # True if using the m-QReLU (instead of the QReLU)
 
         layers.MaxPooling2D(pool_size=(2, 2)),
     ]
