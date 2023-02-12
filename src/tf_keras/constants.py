@@ -1,5 +1,5 @@
 """
-This file contains constants leveraged across the two quantum activation functions QuantumReLU and m-QuantumReLU.
+This file contains constants leveraged across the two quantum activation functions QReLU and m-QReLU.
 """
 
 DERIVATIVE = 1

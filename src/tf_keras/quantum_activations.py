@@ -239,6 +239,7 @@ class QuantumReLU(Layer):
             input_shape: tuple[int, int, int]
                         The shape of the input tensor considered.
         """
+
         super().build(input_shape)
 
     def call(self, inputs: Tensor) -> Tensor:

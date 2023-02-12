@@ -1,5 +1,5 @@
 """
-Example of a simple MNIST image classifier using the QuantumReLU or m-QuantumReLU activation function in its two
+Example of a simple MNIST image classifier using the QReLU or m-QReLU activation function in its two
 convolutional layers.
 
 Adapted from https://keras.io/examples/vision/mnist_convnet/

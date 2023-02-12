@@ -1,6 +1,6 @@
 """
 This file contains utility-based or helper functions leveraged across the two quantum activation functions
-QuantumReLU and m-QuantumReLU.
+QReLU and m-QReLU.
 """
 from typing import Callable, Optional, Union
 
