@@ -1,6 +1,1 @@
-from . import (
-    constants,
-    m_qrelu,
-    qrelu,
-    utils,
-)
+from . import constants, quantum_activations, utils

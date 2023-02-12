@@ -1,26 +1,20 @@
 """
-Example of a simple MNIST image classifier using the QReLU or m-QReLU activation function in its two
+Example of a simple MNIST image classifier using the QuantumReLU or m-QuantumReLU activation function in its two
 convolutional layers.
 
 Adapted from https://keras.io/examples/vision/mnist_convnet/
 """
 
-
 import numpy as np
 from tensorflow import keras
 from tensorflow.keras import layers
 
-from tf_keras.m_qrelu import MQReLU
-from tf_keras.qrelu import QReLU
+from tf_keras.constants import USE_M_QRELU
+from tf_keras.quantum_activations import QuantumReLU
 
-# Choose either the 'qrelu' or 'm_qrelu' activation function to use in the two
-# convolutional layers of a CNN
-act_func = 'qrelu'
-
-if act_func == 'qrelu':
-    custom_layer = QReLU()
-elif act_func == 'm_qrelu':
-    custom_layer = MQReLU()
+# Use the m-QReLU in the two convolutional layers of a CNN if modified = True, otherwise use the QReLU (by default,
+# as modified = False).
+modified = USE_M_QRELU
 
 """
 ## Prepare the data
@@ -56,16 +50,16 @@ model = keras.Sequential(
     [
         keras.Input(shape=inputs_shape),
 
-        # First convolutional layer with the QReLU or m-QReLU activation function
+        # First convolutional layer with the 'QuantumReLU' activation function
         layers.Conv2D(32, kernel_size=(3, 3)),
         # Instead of layers.Conv2D(64, kernel_size=(3, 3), activation="relu") when using the ReLU activation
-        custom_layer,
+        QuantumReLU(modified=modified),
 
         layers.MaxPooling2D(pool_size=(2, 2)),
 
-        # Second convolutional layer with the QReLU or m-QReLU activation function
+        # Second convolutional layer with the 'QuantumReLU' activation function
         layers.Conv2D(64, kernel_size=(3, 3)),
-        custom_layer,
+        QuantumReLU(modified=modified),
 
         layers.MaxPooling2D(pool_size=(2, 2)),
         layers.Flatten(),
