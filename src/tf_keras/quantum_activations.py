@@ -49,15 +49,11 @@ def quantum_relu(x: float, modified: bool = USE_M_QRELU) -> float:
             The transformed x (float) via the QReLU or m-QReLU.
     """
 
-    if x > 0:
-        x = x
-        return x
-    else:
-        second_coefficient = SECOND_COEFFICIENT_QRELU
-        if modified:
-            second_coefficient = 1
+    if x <= 0:
+        second_coefficient = SECOND_COEFFICIENT_M_QRELU if modified else SECOND_COEFFICIENT_QRELU
         x = FIRST_COEFFICIENT * x - second_coefficient * x
-        return x
+
+    return x
 
 
 # Vectorising the 'quantum_relu' function
