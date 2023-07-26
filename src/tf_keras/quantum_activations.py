@@ -204,7 +204,7 @@ model = keras.Sequential(
 
 class QuantumReLU(Layer):
     """
-    A class defining the QuantumReLU activation function in keras.
+    A class defining the QuantumReLU activation function in Keras.
     """
 
     def __init__(self, modified: bool = USE_M_QRELU) -> None:
@@ -218,9 +218,7 @@ class QuantumReLU(Layer):
         """
 
         self.modified = modified
-        self._name = QRELU_NAME
-        if modified:
-            self._name = M_QRELU_NAME
+        self._name = M_QRELU_NAME if modified else QRELU_NAME
         super().__init__()
 
     def build(self, input_shape: tuple[int, int, int]) -> None:
@@ -245,7 +243,6 @@ class QuantumReLU(Layer):
         Returns:
                 The output tensor (Tensor) from the QuantumReLU activation function.
         """
-
         return tf_quantum_relu(x=inputs, modified=self.modified)
 
     def get_config(self) -> dict[list]:
