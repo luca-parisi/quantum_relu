@@ -16,6 +16,7 @@ environment (replace `<env_name>` with your environment name):
 
 
 ### Usage
+Run ` pip install -e .` to install the `src` package in editable mode.
 
 You can use the `QuantumReLU` activation functions as a keras layer and set the `modified` attribute to either `False` 
 or `True` if using the QReLU or the m-QReLU respectively:
