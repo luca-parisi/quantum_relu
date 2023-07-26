@@ -1,6 +1,7 @@
 import unittest
 
-from src.tf_keras.quantum_activations import derivative_quantum_relu, quantum_relu
+from src.tf_keras.quantum_activations import (derivative_quantum_relu,
+                                              quantum_relu)
 
 
 class TestQuantumRelu(unittest.TestCase):
