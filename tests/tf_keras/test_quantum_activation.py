@@ -45,13 +45,15 @@ class TestQuantumRelu(unittest.TestCase):
         """Test when using QReLU (not modified)"""
         x = 2.0
         expected_output = 2.0
-        self.assertAlmostEqual(derivative_quantum_relu(x, modified=False), expected_output)
+        self.assertAlmostEqual(derivative_quantum_relu(
+            x, modified=False), expected_output)
 
     def test_derivative_quantum_relu_mqrelu(self):
         """Test when using m-QReLU (modified)"""
         x = -1.0
         expected_output = -0.99
-        self.assertAlmostEqual(derivative_quantum_relu(x, modified=True), expected_output)
+        self.assertAlmostEqual(derivative_quantum_relu(
+            x, modified=True), expected_output)
 
     def test_derivative_quantum_relu_default(self):
         """Test with default modified (QReLU)"""
