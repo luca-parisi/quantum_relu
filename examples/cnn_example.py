@@ -9,8 +9,8 @@ import numpy as np
 import tensorflow as tf
 from tensorflow.keras import layers
 
-from tf_keras.constants import USE_M_QRELU
-from tf_keras.quantum_activations import QuantumReLU
+from src.tf_keras.constants import USE_M_QRELU
+from src.tf_keras.quantum_activations import QuantumReLU
 
 
 num_classes = 10
