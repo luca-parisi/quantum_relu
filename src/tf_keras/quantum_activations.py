@@ -72,18 +72,14 @@ def derivative_quantum_relu(x: float, modified: bool = USE_M_QRELU) -> float:
             using the QReLU by default).
 
     Returns:
-            The derivative (float) of the QReLU or m-QReLU given an input.
+        The derivative (float) of the QReLU or m-QReLU given an input.
     """
 
-    if x > 0:
-        x = DERIVATIVE
-        return x
-    else:
-        second_coefficient = SECOND_COEFFICIENT_QRELU
-        if modified:
-            second_coefficient = SECOND_COEFFICIENT_M_QRELU
-        x = FIRST_COEFFICIENT-second_coefficient
-        return x
+    if x <= 0:
+        second_coefficient = SECOND_COEFFICIENT_M_QRELU if modified else SECOND_COEFFICIENT_QRELU
+        x = FIRST_COEFFICIENT - second_coefficient
+
+    return x
 
 
 # Vectorising the derivative of the QReLU function
