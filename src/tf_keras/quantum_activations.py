@@ -108,7 +108,21 @@ def quantum_relu_grad(op: _LiteFuncCall, grad: float, modified: bool = USE_M_QRE
     return grad * n_gr
 
 
-def np_quantum_relu_float32(x): return np_quantum_relu(x).astype(np.float32)
+def np_quantum_relu_float32(x: np.ndarray) -> np.ndarray:
+    """
+    Apply the QuantumReLU or modified QuantumReLU activation function to a NumPy array and return the result
+    as a float32 NumPy array.
+
+    Args:
+        x: np.ndarray
+            The input NumPy array to be transformed via the QuantumReLU or modified QuantumReLU activation function.
+
+    Returns:
+        np.ndarray
+            The transformed NumPy array after applying the QuantumReLU or modified QuantumReLU activation function.
+            The output array will have data type float32.
+    """
+    return np_quantum_relu(x).astype(np.float32)
 
 
 def tf_quantum_relu(x: Tensor, modified: bool = USE_M_QRELU) -> Tensor:
@@ -141,8 +155,21 @@ def tf_quantum_relu(x: Tensor, modified: bool = USE_M_QRELU) -> Tensor:
     return y[0]
 
 
-def np_der_quantum_relu_float32(
-    x): return np_der_quantum_relu(x).astype(np.float32)
+def np_der_quantum_relu_float32(x: np.ndarray) -> np.ndarray:
+    """
+    Calculate the derivative of the QuantumReLU or modified QuantumReLU activation function for a NumPy array
+    and return the result as a float32 NumPy array.
+
+    Args:
+        x: np.ndarray
+            The input NumPy array for which the derivative is to be computed.
+
+    Returns:
+        np.ndarray
+            The calculated derivative of the QuantumReLU or modified QuantumReLU activation function for the input
+            array. The output array will have data type float32.
+    """
+    return np_der_quantum_relu(x).astype(np.float32)
 
 
 def tf_der_quantum_relu(x: list[Tensor], modified: bool = USE_M_QRELU) -> float:
