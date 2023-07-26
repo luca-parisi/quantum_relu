@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "quantum_relu"
+authors = [
+    {name = "Luca Parisi", email = "luca.parisi@ieee.org"},
+]
+description = "Quantum ReLU (QReLU) and modified QReLU (m-QReLU) activation function"
+readme = "README.md"
+requires-python = ">=3.9"
+keywords = ["QReLU", "m-QReLU"]
+license = {text = "CC BY 4.0"}
+classifiers = [
+    "Frameworks :: TensorFlow and Keras",
+    "Programming Language :: Python :: 3",
+]
+dependencies = [
+    "requests",
+    'importlib-metadata; python_version>="3.9"',
+]
+dynamic = ["version"]
+
+[tool.setuptools]
+packages = ["src"]

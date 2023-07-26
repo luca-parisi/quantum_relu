@@ -11,7 +11,7 @@ from tensorflow import Tensor
 from tensorflow.keras.layers import Layer
 from tensorflow.lite.python.op_hint import _LiteFuncCall
 
-from tf_keras.utils import py_func
+from src.tf_keras.utils import py_func
 
 from .constants import (DERIV_M_QRELU_NAME, DERIV_QRELU_NAME, DERIVATIVE,
                         FIRST_COEFFICIENT, M_QRELU_NAME, QRELU_NAME,
@@ -49,15 +49,11 @@ def quantum_relu(x: float, modified: bool = USE_M_QRELU) -> float:
             The transformed x (float) via the QReLU or m-QReLU.
     """
 
-    if x > 0:
-        x = x
-        return x
-    else:
-        second_coefficient = SECOND_COEFFICIENT_QRELU
-        if modified:
-            second_coefficient = 1
+    if x <= 0:
+        second_coefficient = SECOND_COEFFICIENT_M_QRELU if modified else SECOND_COEFFICIENT_QRELU
         x = FIRST_COEFFICIENT * x - second_coefficient * x
-        return x
+
+    return x
 
 
 # Vectorising the 'quantum_relu' function
@@ -76,25 +72,21 @@ def derivative_quantum_relu(x: float, modified: bool = USE_M_QRELU) -> float:
             using the QReLU by default).
 
     Returns:
-            The derivative (float) of the QReLU or m-QReLU given an input.
+        The derivative (float) of the QReLU or m-QReLU given an input.
     """
 
-    if x > 0:
-        x = DERIVATIVE
-        return x
-    else:
-        second_coefficient = SECOND_COEFFICIENT_QRELU
-        if modified:
-            second_coefficient = SECOND_COEFFICIENT_M_QRELU
-        x = FIRST_COEFFICIENT-second_coefficient
-        return x
+    if x <= 0:
+        second_coefficient = SECOND_COEFFICIENT_M_QRELU if modified else SECOND_COEFFICIENT_QRELU
+        x = FIRST_COEFFICIENT - second_coefficient
+
+    return x
 
 
 # Vectorising the derivative of the QReLU function
 np_der_quantum_relu = np.vectorize(derivative_quantum_relu)
 
 
-def quantum_relu_grad(op: _LiteFuncCall, grad: float, modified: bool = USE_M_QRELU) -> float:
+def quantum_relu_grad(op: _LiteFuncCall, grad: float, modified: bool = USE_M_QRELU) -> float:  # pragma: no cover
     """
     Define the gradient function of the QReLU or m-QReLU.
 
@@ -116,10 +108,24 @@ def quantum_relu_grad(op: _LiteFuncCall, grad: float, modified: bool = USE_M_QRE
     return grad * n_gr
 
 
-def np_quantum_relu_float32(x): return np_quantum_relu(x).astype(np.float32)
+def np_quantum_relu_float32(x: np.ndarray) -> np.ndarray:  # pragma: no cover
+    """
+    Apply the QuantumReLU or modified QuantumReLU activation function to a NumPy array and return the result
+    as a float32 NumPy array.
+
+    Args:
+        x: np.ndarray
+            The input NumPy array to be transformed via the QuantumReLU or modified QuantumReLU activation function.
+
+    Returns:
+        np.ndarray
+            The transformed NumPy array after applying the QuantumReLU or modified QuantumReLU activation function.
+            The output array will have data type float32.
+    """
+    return np_quantum_relu(x).astype(np.float32)
 
 
-def tf_quantum_relu(x: Tensor, modified: bool = USE_M_QRELU) -> Tensor:
+def tf_quantum_relu(x: Tensor, modified: bool = USE_M_QRELU) -> Tensor:  # pragma: no cover
     """
     The QReLU activation function defined in TensorFlow.
 
@@ -149,11 +155,24 @@ def tf_quantum_relu(x: Tensor, modified: bool = USE_M_QRELU) -> Tensor:
     return y[0]
 
 
-def np_der_quantum_relu_float32(
-    x): return np_der_quantum_relu(x).astype(np.float32)
+def np_der_quantum_relu_float32(x: np.ndarray) -> np.ndarray:  # pragma: no cover
+    """
+    Calculate the derivative of the QuantumReLU or modified QuantumReLU activation function for a NumPy array
+    and return the result as a float32 NumPy array.
+
+    Args:
+        x: np.ndarray
+            The input NumPy array for which the derivative is to be computed.
+
+    Returns:
+        np.ndarray
+            The calculated derivative of the QuantumReLU or modified QuantumReLU activation function for the input
+            array. The output array will have data type float32.
+    """
+    return np_der_quantum_relu(x).astype(np.float32)
 
 
-def tf_der_quantum_relu(x: list[Tensor], modified: bool = USE_M_QRELU) -> float:
+def tf_der_quantum_relu(x: list[Tensor], modified: bool = USE_M_QRELU) -> float:  # pragma: no cover
     """
     The derivative of the QReLU or m-QReLU defined in TensorFlow.
 
@@ -210,9 +229,9 @@ model = keras.Sequential(
 '''
 
 
-class QuantumReLU(Layer):
+class QuantumReLU(Layer):  # pragma: no cover
     """
-    A class defining the QuantumReLU activation function in keras.
+    A class defining the QuantumReLU activation function in Keras.
     """
 
     def __init__(self, modified: bool = USE_M_QRELU) -> None:
@@ -226,21 +245,8 @@ class QuantumReLU(Layer):
         """
 
         self.modified = modified
-        self._name = QRELU_NAME
-        if modified:
-            self._name = M_QRELU_NAME
+        self._name = M_QRELU_NAME if modified else QRELU_NAME
         super().__init__()
-
-    def build(self, input_shape: tuple[int, int, int]) -> None:
-        """
-        Build the QuantumReLU activation function given an input shape.
-
-        Args:
-            input_shape: tuple[int, int, int]
-                        The shape of the input tensor considered.
-        """
-
-        super().build(input_shape)
 
     def call(self, inputs: Tensor) -> Tensor:
         """
@@ -253,16 +259,4 @@ class QuantumReLU(Layer):
         Returns:
                 The output tensor (Tensor) from the QuantumReLU activation function.
         """
-
         return tf_quantum_relu(x=inputs, modified=self.modified)
-
-    def get_config(self) -> dict[list]:
-        """
-        Get the configs of the QuantumReLU activation function.
-
-        Returns:
-                A dictionary of the configs of the QuantumReLU activation function.
-        """
-
-        base_config = super().get_config()
-        return dict(list(base_config.items()))

@@ -16,6 +16,7 @@ environment (replace `<env_name>` with your environment name):
 
 
 ### Usage
+Run ` pip install -e .` to install the `src` package in editable mode.
 
 You can use the `QuantumReLU` activation functions as a keras layer and set the `modified` attribute to either `False` 
 or `True` if using the QReLU or the m-QReLU respectively:
@@ -51,6 +52,10 @@ via the following two commands respectively:
 
 - `isort <folder_name>`
 - `autopep8 --in-place --recursive .`
+
+### Unit testing
+Run `pytest --cov-report term-missing --cov=src tests/` to execute all unit tests and view the report with the test 
+coverage in percentage and missing lines too.
 
 ### Citation request
 
