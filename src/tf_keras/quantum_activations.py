@@ -221,17 +221,6 @@ class QuantumReLU(Layer):
         self._name = M_QRELU_NAME if modified else QRELU_NAME
         super().__init__()
 
-    def build(self, input_shape: tuple[int, int, int]) -> None:
-        """
-        Build the QuantumReLU activation function given an input shape.
-
-        Args:
-            input_shape: tuple[int, int, int]
-                        The shape of the input tensor considered.
-        """
-
-        super().build(input_shape)
-
     def call(self, inputs: Tensor) -> Tensor:
         """
         Call the QuantumReLU activation function.
@@ -244,14 +233,3 @@ class QuantumReLU(Layer):
                 The output tensor (Tensor) from the QuantumReLU activation function.
         """
         return tf_quantum_relu(x=inputs, modified=self.modified)
-
-    def get_config(self) -> dict[list]:
-        """
-        Get the configs of the QuantumReLU activation function.
-
-        Returns:
-                A dictionary of the configs of the QuantumReLU activation function.
-        """
-
-        base_config = super().get_config()
-        return dict(list(base_config.items()))
