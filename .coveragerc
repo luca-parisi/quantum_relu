@@ -1,0 +1,12 @@
+[run]
+source = src
+
+[report]
+omit =
+    *__init__.py
+    *constants.py
+    src/tf_keras/utils.py
+
+exclude_lines =
+    pragma: no cover
+    if __name__ == "__main__":

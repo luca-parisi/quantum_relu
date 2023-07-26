@@ -52,6 +52,10 @@ via the following two commands respectively:
 - `isort <folder_name>`
 - `autopep8 --in-place --recursive .`
 
+### Unit testing
+Run `pytest --cov-report term-missing --cov=src tests/` to execute all unit tests and view the report with the test 
+coverage in percentage and missing lines too.
+
 ### Citation request
 
 If you use these activation functions, please cite the papers by **[Parisi, L., 2020](https://arxiv.org/abs/2010.08031)** and **[Parisi, L., et al., 2022](https://www.sciencedirect.com/science/article/abs/pii/S0957417421012483)**.

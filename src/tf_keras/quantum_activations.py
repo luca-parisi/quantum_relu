@@ -11,7 +11,7 @@ from tensorflow import Tensor
 from tensorflow.keras.layers import Layer
 from tensorflow.lite.python.op_hint import _LiteFuncCall
 
-from tf_keras.utils import py_func
+from src.tf_keras.utils import py_func
 
 from .constants import (DERIV_M_QRELU_NAME, DERIV_QRELU_NAME, DERIVATIVE,
                         FIRST_COEFFICIENT, M_QRELU_NAME, QRELU_NAME,
@@ -86,7 +86,7 @@ def derivative_quantum_relu(x: float, modified: bool = USE_M_QRELU) -> float:
 np_der_quantum_relu = np.vectorize(derivative_quantum_relu)
 
 
-def quantum_relu_grad(op: _LiteFuncCall, grad: float, modified: bool = USE_M_QRELU) -> float:
+def quantum_relu_grad(op: _LiteFuncCall, grad: float, modified: bool = USE_M_QRELU) -> float:  # pragma: no cover
     """
     Define the gradient function of the QReLU or m-QReLU.
 
@@ -108,7 +108,7 @@ def quantum_relu_grad(op: _LiteFuncCall, grad: float, modified: bool = USE_M_QRE
     return grad * n_gr
 
 
-def np_quantum_relu_float32(x: np.ndarray) -> np.ndarray:
+def np_quantum_relu_float32(x: np.ndarray) -> np.ndarray:  # pragma: no cover
     """
     Apply the QuantumReLU or modified QuantumReLU activation function to a NumPy array and return the result
     as a float32 NumPy array.
@@ -125,7 +125,7 @@ def np_quantum_relu_float32(x: np.ndarray) -> np.ndarray:
     return np_quantum_relu(x).astype(np.float32)
 
 
-def tf_quantum_relu(x: Tensor, modified: bool = USE_M_QRELU) -> Tensor:
+def tf_quantum_relu(x: Tensor, modified: bool = USE_M_QRELU) -> Tensor:  # pragma: no cover
     """
     The QReLU activation function defined in TensorFlow.
 
@@ -155,7 +155,7 @@ def tf_quantum_relu(x: Tensor, modified: bool = USE_M_QRELU) -> Tensor:
     return y[0]
 
 
-def np_der_quantum_relu_float32(x: np.ndarray) -> np.ndarray:
+def np_der_quantum_relu_float32(x: np.ndarray) -> np.ndarray:  # pragma: no cover
     """
     Calculate the derivative of the QuantumReLU or modified QuantumReLU activation function for a NumPy array
     and return the result as a float32 NumPy array.
@@ -172,7 +172,7 @@ def np_der_quantum_relu_float32(x: np.ndarray) -> np.ndarray:
     return np_der_quantum_relu(x).astype(np.float32)
 
 
-def tf_der_quantum_relu(x: list[Tensor], modified: bool = USE_M_QRELU) -> float:
+def tf_der_quantum_relu(x: list[Tensor], modified: bool = USE_M_QRELU) -> float:  # pragma: no cover
     """
     The derivative of the QReLU or m-QReLU defined in TensorFlow.
 
@@ -229,7 +229,7 @@ model = keras.Sequential(
 '''
 
 
-class QuantumReLU(Layer):
+class QuantumReLU(Layer):  # pragma: no cover
     """
     A class defining the QuantumReLU activation function in Keras.
     """
