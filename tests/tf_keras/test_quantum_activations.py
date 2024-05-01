@@ -1,3 +1,5 @@
+"""Unit tests for the quantum activation functions"""
+
 import unittest
 
 from src.tf_keras.quantum_activations import (derivative_quantum_relu,
@@ -5,6 +7,7 @@ from src.tf_keras.quantum_activations import (derivative_quantum_relu,
 
 
 class TestQuantumRelu(unittest.TestCase):
+    """Class to unit test quantum activation functions"""
 
     def test_quantum_relu_with_positive_input(self):
         """Test with positive input and default (QReLU) activation"""

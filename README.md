@@ -1,7 +1,7 @@
-# QReLU and m-QReLU in TensorFlow and Keras
+# QReLU and m-QReLU in TensorFlow, Keras, and PyTorch
 ## Two novel quantum activation functions
 
-The Quantum ReLU **'QReLU'** and its modified version or **'m-QReLU'** are Python custom activation functions available for both shallow and deep neural networks in TensorFlow and Keras for Machine Learning- and Deep Learning-based classification. They are distributed under the [CC BY 4.0 license](http://creativecommons.org/licenses/by/4.0/).
+The Quantum ReLU **'QReLU'** and its modified version or **'m-QReLU'** are Python custom activation functions available for both shallow and deep neural networks in TensorFlow, Keras, and PyTorch for Machine Learning- and Deep Learning-based classification. They are distributed under the [CC BY 4.0 license](http://creativecommons.org/licenses/by/4.0/).
 
 Details on these functions, implementations, and validations against gold standard activation functions for both shallow and deep neural networks are available at the papers: **[Parisi, L., 2020](https://arxiv.org/abs/2010.08031)** and **[Parisi, L., et al., 2022](https://www.sciencedirect.com/science/article/abs/pii/S0957417421012483)**. 
 
@@ -44,6 +44,14 @@ model = keras.Sequential(
         layers.MaxPooling2D(pool_size=(2, 2)),
     ]
 )
+```
+
+#### Example of usage in a sequential model in PyTorch with a `QuantumReLU` layer between a convolutional layer and a pooling layer
+
+```python
+self.conv1 = nn.Conv2d(1, 32, kernel_size=3)
+self.relu1 = QuantumReLU(modified=False)  # True if using the m-QReLU (instead of the QReLU)
+self.pool1 = nn.MaxPool2d(kernel_size=2)
 ```
 
 ### Linting

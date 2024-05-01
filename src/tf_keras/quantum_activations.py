@@ -7,16 +7,15 @@
 
 import numpy as np
 import tensorflow as tf
+from src.constants import (FIRST_COEFFICIENT, M_QRELU_NAME, QRELU_NAME,
+                           SECOND_COEFFICIENT_M_QRELU,
+                           SECOND_COEFFICIENT_QRELU, USE_M_QRELU)
+from src.tf_keras.utils import py_func
 from tensorflow import Tensor
 from tensorflow.keras.layers import Layer
 from tensorflow.lite.python.op_hint import _LiteFuncCall
 
-from src.tf_keras.utils import py_func
-
-from .constants import (DERIV_M_QRELU_NAME, DERIV_QRELU_NAME, DERIVATIVE,
-                        FIRST_COEFFICIENT, M_QRELU_NAME, QRELU_NAME,
-                        SECOND_COEFFICIENT_M_QRELU, SECOND_COEFFICIENT_QRELU,
-                        USE_M_QRELU)
+from .constants import DERIV_M_QRELU_NAME, DERIV_QRELU_NAME
 
 # QReLU and m-QReLU as custom activation functions in TensorFlow
 

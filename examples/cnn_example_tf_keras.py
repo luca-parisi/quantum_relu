@@ -7,13 +7,14 @@ Adapted from https://keras.io/examples/vision/mnist_convnet/
 
 import numpy as np
 import tensorflow as tf
+from constants import (BATCH_SIZE, DROPOUT, IMAGE_DIM, KERNEL_SIZE_CONV,
+                       KERNEL_SIZE_MAX_POOL, NUM_CLASSES, NUM_EPOCHS,
+                       OUT_CHANNEL_CONV1, OUT_CHANNEL_CONV2)
+from src.constants import USE_M_QRELU
+from src.tf_keras.quantum_activations import QuantumReLU
 from tensorflow.keras import layers
 
-from src.tf_keras.constants import USE_M_QRELU
-from src.tf_keras.quantum_activations import QuantumReLU
-
-num_classes = 10
-inputs_shape = (28, 28, 1)
+inputs_shape = (IMAGE_DIM, IMAGE_DIM, 1)
 
 (x_train, y_train), (x_test, y_test) = tf.keras.datasets.mnist.load_data()
 
@@ -24,8 +25,8 @@ x_train = np.expand_dims(x_train, -1)
 x_test = np.expand_dims(x_test, -1)
 
 # Convert class vectors to binary class matrices
-y_train = tf.keras.utils.to_categorical(y_train, num_classes)
-y_test = tf.keras.utils.to_categorical(y_test, num_classes)
+y_train = tf.keras.utils.to_categorical(y_train, NUM_CLASSES)
+y_test = tf.keras.utils.to_categorical(y_test, NUM_CLASSES)
 
 
 def create_model(modified: bool = False) -> tf.keras.Model:
@@ -43,15 +44,19 @@ def create_model(modified: bool = False) -> tf.keras.Model:
 
     sequential_model = tf.keras.Sequential([
         tf.keras.Input(shape=inputs_shape),
-        layers.Conv2D(32, kernel_size=(3, 3)),
+        layers.Conv2D(OUT_CHANNEL_CONV1, kernel_size=(
+            KERNEL_SIZE_CONV, KERNEL_SIZE_CONV)),
         QuantumReLU(modified=modified),
-        layers.MaxPooling2D(pool_size=(2, 2)),
-        layers.Conv2D(64, kernel_size=(3, 3)),
+        layers.MaxPooling2D(pool_size=(
+            KERNEL_SIZE_MAX_POOL, KERNEL_SIZE_MAX_POOL)),
+        layers.Conv2D(OUT_CHANNEL_CONV2, kernel_size=(
+            KERNEL_SIZE_CONV, KERNEL_SIZE_CONV)),
         QuantumReLU(modified=modified),
-        layers.MaxPooling2D(pool_size=(2, 2)),
+        layers.MaxPooling2D(pool_size=(
+            KERNEL_SIZE_MAX_POOL, KERNEL_SIZE_MAX_POOL)),
         layers.Flatten(),
-        layers.Dropout(0.5),
-        layers.Dense(num_classes, activation="softmax"),
+        layers.Dropout(DROPOUT),
+        layers.Dense(NUM_CLASSES, activation="softmax"),
     ])
     return sequential_model
 
@@ -60,10 +65,10 @@ model = create_model(modified=USE_M_QRELU)
 model.summary()
 
 # Train the model
-batch_size = 128
-epochs = 2
-model.compile(loss="categorical_crossentropy", optimizer="adam", metrics=["accuracy"])
-model.fit(x_train, y_train, batch_size=batch_size, epochs=epochs, validation_split=0.1)
+model.compile(loss="categorical_crossentropy",
+              optimizer="adam", metrics=["accuracy"])
+model.fit(x_train, y_train, batch_size=BATCH_SIZE,
+          epochs=NUM_EPOCHS, validation_split=0.1)
 
 # Evaluate the trained model
 score = model.evaluate(x_test, y_test, verbose=0)
