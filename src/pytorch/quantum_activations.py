@@ -59,8 +59,9 @@ def torch_quantum_relu(x: torch.Tensor, modified: bool = USE_M_QRELU) -> torch.T
     Returns:
             The transformed x (torch.Tensor) via the QReLU or m-QReLU.
     """
-    if torch.any(x <= 0):
-        second_coefficient = SECOND_COEFFICIENT_M_QRELU_PYTORCH if modified else SECOND_COEFFICIENT_QRELU_PYTORCH
-        x = FIRST_COEFFICIENT_PYTORCH * x - second_coefficient * x
-
-    return x
+    second_coefficient = SECOND_COEFFICIENT_M_QRELU_PYTORCH if modified else SECOND_COEFFICIENT_QRELU_PYTORCH
+    return torch.where(
+            x <= 0,
+            FIRST_COEFFICIENT_PYTORCH * x - second_coefficient * x,
+            x,
+    )
